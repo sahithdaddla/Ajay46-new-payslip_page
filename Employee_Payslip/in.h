@@ -409,7 +409,7 @@
                 <div class="payslip-header">
                     <div class="header-top">
                         <!-- Replace with Base64 string: data:image/jpeg;base64,/9j/4AAQ... -->
-                        <img src="ATS_Wallpaper.jpg" alt="ATS Logo" class="company-logo" />
+                        <img src="/ATS_Wallpaper.jpg" alt="ATS Logo" class="company-logo" />
                         <div class="company-details">
                             <h2>Astrolite Tech Solutions Pvt Ltd</h2>
                             <p>Plot No 65, Flat No 201, 2nd Floor, Siddivinayaka Nagar, Survey of India, Madhapur, HYDERABAD -081</p>
