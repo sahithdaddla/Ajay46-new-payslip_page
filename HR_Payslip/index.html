@@ -380,14 +380,16 @@
             line-height: 1.5;
         }
 
-        .payslip-header h3 {
-            text-align: center;
-            margin-top: 10px;
-            color: #34495e;
-            font-size: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+                .payslip-header h3 { 
+    text-align: center;
+    font-family: Georgia, serif;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #34495e;
+    font-size: 20px;
+    font-weight: 550;
+    text-transform: uppercase;
+}
 
         .payslip-details .details-table {
             width: 100%;
@@ -692,13 +694,13 @@
             <div class="payslip">
                 <div class="payslip-header">
                     <div class="header-top">
-                        <img src="ATS_Wallpaper.jpg" alt="ATS Logo" class="company-logo" />
+                        <img src="ATS Wallpaper.jpg" alt="ATS Logo" class="company-logo" />
                         <div class="company-details">
                             <h2>Astrolite Tech Solutions Pvt Ltd</h2>
                             <p>Plot No 65, Flat No 201, 2nd Floor, Siddivinayaka Nagar, Survey of India, Madhapur, HYDERABAD -081</p>
                         </div>
                     </div>
-                    <h3>Salary Slip for <span id="preview-month-year"></span></h3>
+                    <h3>Payslip for the month of <span id="preview-month-year"></span></h3>
                 </div>
 
                 <div class="payslip-details">
@@ -1804,103 +1806,83 @@
                 document.getElementById('preview-amount-in-words').textContent = numberToWords(formData.netPay || 0) + ' Rupees only';
             }
 
-            function numberToWords(number) {
-                try {
-                    const first = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 
-                                'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 
-                                'Eighteen ', 'Nineteen '];
-                    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-                    const scales = ['', 'Thousand ', 'Lakh ', 'Crore '];
-                    
-                    if (!number || number < 0) return 'Zero';
-                    
-                    const numStr = Number(number).toFixed(2);
-                    const parts = numStr.split('.');
-                    const wholePart = parseInt(parts[0]);
-                    const decimalPart = parseInt(parts[1]);
-                    
-                    function convertWholeNumber(num) {
-                        if (num === 0) return '';
-                        
-                        let words = '';
-                        
-                        const hundreds = num % 1000;
-                        if (hundreds > 0) {
-                            if (hundreds < 20) {
-                                words = first[hundreds] + ' ';
-                            } else {
-                                const tensValue = Math.floor(hundreds / 10) % 10;
-                                const onesValue = hundreds % 10;
-                                words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' ';
-                            }
-                        }
-                        
-                        num = Math.floor(num / 1000);
-                        if (num > 0) {
-                            const thousands = num % 100;
-                        if (thousands > 0) {
-                            if (thousands < 20) {
-                                words = first[thousands] + ' Thousand ' + words;
-                            } else {
-                                const tensValue = Math.floor(thousands / 10) % 10;
-                                const onesValue = thousands % 10;
-                                words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Thousand ' + words;
-                            }
-                        }
+   function numberToWords(number) {
+    try {
+        const first = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 
+                      'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 
+                      'Eighteen ', 'Nineteen '];
+        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+        const scales = ['', 'Thousand ', 'Lakh ', 'Crore '];
 
-                        num = Math.floor(num / 100);
-                        if (num > 0) {
-                            const lakhs = num % 100;
-                            if (lakhs > 0) {
-                                if (lakhs < 20) {
-                                    words = first[lakhs] + ' Lakh ' + words;
-                                } else {
-                                    const tensValue = Math.floor(lakhs / 10) % 10;
-                                    const onesValue = lakhs % 10;
-                                    words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Lakh ' + words;
-                                }
-                            }
-                        }
+        if (!number || number < 0) return 'Zero';
 
-                        num = Math.floor(num / 100);
-                        if (num > 0) {
-                            const crores = num % 100;
-                            if (crores > 0) {
-                                if (crores < 20) {
-                                    words = first[crores] + ' Crore ' + words;
-                                } else {
-                                    const tensValue = Math.floor(crores / 10) % 10;
-                                    const onesValue = crores % 10;
-                                    words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Crore ' + words;
-                                }
-                            }
-                        }
+        const numStr = Number(number).toFixed(2);
+        const parts = numStr.split('.');
+        const wholePart = parseInt(parts[0]);
+        const decimalPart = parseInt(parts[1]);
 
-                            return words.trim();
-                        }
+        function convertWholeNumber(num) {
+            if (num === 0) return '';
+
+            let words = '';
+            let remaining = num;
+            let scaleIndex = 0;
+
+            while (remaining > 0) {
+                const chunk = remaining % 1000;
+                if (chunk > 0) {
+                    let chunkWords = '';
+                    const hundreds = Math.floor(chunk / 100);
+                    const tensUnits = chunk % 100;
+
+                    if (hundreds > 0) {
+                        chunkWords += first[hundreds] + 'Hundred ';
                     }
-                    
-                    function convertDecimalNumber(num) {
-                        if (num === 0) return '';
-                        let words = 'and ';
-                        if (num < 20) {
-                            words += first[num] + ' Paise';
+
+                    if (tensUnits > 0) {
+                        if (tensUnits < 20) {
+                            chunkWords += first[tensUnits];
                         } else {
-                            const tensValue = Math.floor(num / 10) % 10;
-                            const onesValue = num % 10;
-                            words += tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Paise';
+                            const tensValue = Math.floor(tensUnits / 10);
+                            const onesValue = tensUnits % 10;
+                            chunkWords += tens[tensValue];
+                            if (onesValue > 0) chunkWords += ' ' + first[onesValue];
                         }
-                        return words.trim();
                     }
-                    
-                    const wholeWords = convertWholeNumber(wholePart);
-                    const decimalWords = decimalPart > 0 ? convertDecimalNumber(decimalPart) : '';
-                    return (wholeWords + ' ' + decimalWords).trim();
-                } catch (error) {
-                    console.error('Error in numberToWords:', error);
-                    return 'Error converting amount to words';
+
+                    if (chunkWords) {
+                        chunkWords += scales[scaleIndex] + ' ';
+                    }
+                    words = chunkWords + words;
                 }
+                remaining = Math.floor(remaining / 1000);
+                scaleIndex++;
             }
+
+            return words.trim();
+        }
+
+        function convertDecimalNumber(num) {
+            if (num === 0) return '';
+            let words = 'and ';
+            if (num < 20) {
+                words += first[num] + ' Paise';
+            } else {
+                const tensValue = Math.floor(num / 10) % 10;
+                const onesValue = num % 10;
+                words += tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Paise';
+            }
+            return words.trim();
+        }
+
+        const wholeWords = convertWholeNumber(wholePart);
+        const decimalWords = decimalPart > 0 ? convertDecimalNumber(decimalPart) : '';
+        return (wholeWords + ' ' + decimalWords).trim();
+    } catch (error) {
+        console.error('Error in numberToWords:', error);
+        return 'Error converting amount to words';
+    }
+}
 
             function formatMonthYear(monthYear) {
                 const date = new Date(monthYear);
