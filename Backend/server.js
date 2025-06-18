@@ -8,7 +8,7 @@ const path = require('path');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3018;
+const port = process.env.PORT || 3009;
 
 // Database configuration
 const pool = new Pool({

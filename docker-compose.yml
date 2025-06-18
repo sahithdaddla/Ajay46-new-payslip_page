@@ -4,7 +4,7 @@ services:
   backend:
     build: ./Backend
     ports:
-      - "3018:3018"
+      - "3009:3009"
     env_file:
       - ./Backend/server.env
     depends_on:
@@ -13,17 +13,17 @@ services:
   employee_payslip:
     build: ./Employee_Payslip
     ports:
-      - "9027:80"
+      - "7019:80"
 
   hr_payslip:
     build: ./HR_Payslip
     ports:
-      - "9028:80"
+      - "7020:80"
 
   postgres:
     image: postgres:15
     ports:
-      - "5446:5432"
+      - "5009:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin123
