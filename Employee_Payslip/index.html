@@ -409,7 +409,7 @@
                 <div class="payslip-header">
                     <div class="header-top">
                         <!-- Replace with Base64 string: data:image/jpeg;base64,/9j/4AAQ... -->
-                        <img src="ATS_Wallpaper.jpg" alt="ATS Logo" class="company-logo" />
+                        <img src="ATS Wallpaper.jpg" alt="ATS Logo" class="company-logo" />
                         <div class="company-details">
                             <h2>Astrolite Tech Solutions Pvt Ltd</h2>
                             <p>Plot No 65, Flat No 201, 2nd Floor, Siddivinayaka Nagar, Survey of India, Madhapur, HYDERABAD -081</p>
@@ -971,99 +971,111 @@
             }
 
             function numberToWords(number) {
-                console.log('Converting number to words:', number);
-                try {
-                    const first = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ',
-                        'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ',
-                        'Eighteen ', 'Nineteen '];
-                    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-                    const scales = ['', 'Thousand ', 'Lakh ', 'Crore '];
+    console.log('Converting number to words:', number);
+    try {
+        const first = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ',
+            'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ',
+            'Eighteen ', 'Nineteen '];
+        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+        const scales = ['', 'Thousand ', 'Lakh ', 'Crore '];
 
-                    if (!number || number < 0) return 'Zero';
+        if (!number || number < 0) return 'Zero';
 
-                    const numStr = Number(number).toFixed(2);
-                    const parts = numStr.split('.');
-                    const wholePart = parseInt(parts[0]);
-                    const decimalPart = parseInt(parts[1]);
+        const numStr = Number(number).toFixed(2);
+        const parts = numStr.split('.');
+        const wholePart = parseInt(parts[0]);
+        const decimalPart = parseInt(parts[1]);
 
-                    function convertWholeNumber(num) {
-                        if (num === 0) return '';
+        function convertWholeNumber(num) {
+            if (num === 0) return '';
 
-                        let words = '';
+            let words = '';
 
-                        const hundreds = num % 1000;
-                        if (hundreds > 0) {
-                            if (hundreds < 20) {
-                                words = first[hundreds] + ' ';
-                            } else {
-                                const tensValue = Math.floor(hundreds / 10) % 10;
-                                const onesValue = hundreds % 10;
-                                words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' ';
-                            }
-                        }
+            // Handle crores
+            const crore = Math.floor(num / 10000000);
+            num = num % 10000000;
+            if (crore > 0) {
+                if (crore < 20) {
+                    words = first[crore] + 'Crore ';
+                } else {
+                    const croreTens = Math.floor(crore / 10);
+                    const croreOnes = crore % 10;
+                    words = tens[croreTens] + (croreOnes > 0 ? ' ' + first[croreOnes] : '') + ' Crore ';
+                }
+                num = num % 10000000;
+            }
 
-                        num = Math.floor(num / 1000);
-                        if (num > 0) {
-                            const thousands = num % 100;
-                            if (thousands > 0) {
-                                if (thousands < 20) {
-                                    words = first[thousands] + ' Thousand ' + words;
-                                } else {
-                                    const tensValue = Math.floor(thousands / 10) % 10;
-                                    const onesValue = thousands % 10;
-                                    words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Thousand ' + words;
-                                }
-                            }
-                        }
-
-                        num = Math.floor(num / 100);
-                        if (num > 0) {
-                            const lakhs = num % 100;
-                            if (lakhs > 0) {
-                                if (lakhs < 20) {
-                                    words = first[lakhs] + ' Lakh ' + words;
-                                } else {
-                                    const tensValue = Math.floor(lakhs / 10) % 10;
-                                    const onesValue = lakhs % 10;
-                                    words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Lakh ' + words;
-                                }
-                            }
-                        }
-
-                        num = Math.floor(num / 100);
-                        if (num > 0) {
-                            if (num < 20) {
-                                words = first[num] + ' Crore ' + words;
-                            } else {
-                                const tensValue = Math.floor(num / 10) % 10;
-                                const onesValue = num % 10;
-                                words = tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '') + ' Crore ' + words;
-                            }
-                        }
-
-                        return words.trim();
-                    }
-
-                    let result = convertWholeNumber(wholePart);
-
-                    if (decimalPart > 0) {
-                        result = result + ' and ';
-                        if (decimalPart < 20) {
-                            result = result + first[decimalPart];
-                        } else {
-                            const tensValue = Math.floor(decimalPart / 10);
-                            const onesValue = decimalPart % 10;
-                            result = result + tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '');
-                        }
-                        result = result + ' Paise';
-                    }
-
-                    return result.trim() || 'Zero';
-                } catch (error) {
-                    console.error('Error converting number to words:', error);
-                    return 'Zero';
+            // Handle lakhs
+            const lakh = Math.floor(num / 100000);
+            num = num % 100000;
+            if (lakh > 0) {
+                if (lakh < 20) {
+                    words += first[lakh] + 'Lakh ';
+                } else {
+                    const lakhTens = Math.floor(lakh / 10);
+                    const lakhOnes = lakh % 10;
+                    words += tens[lakhTens] + (lakhOnes > 0 ? ' ' + first[lakhOnes] : '') + ' Lakh ';
                 }
             }
+
+            // Handle thousands
+            const thousand = Math.floor(num / 1000);
+            num = num % 1000;
+            if (thousand > 0) {
+                if (thousand < 20) {
+                    words += first[thousand] + 'Thousand ';
+                } else {
+                    const thousandHundreds = Math.floor(thousand / 100);
+                    const thousandTens = Math.floor((thousand % 100) / 10);
+                    const thousandOnes = thousand % 10;
+                    words += (thousandHundreds > 0 ? first[thousandHundreds] + 'Hundred ' : '') +
+                             (thousandTens > 1 ? tens[thousandTens] + (thousandOnes > 0 ? ' ' + first[thousandOnes] : '') : 
+                             (thousandTens === 1 ? first[thousand % 100] : first[thousandOnes])) + ' Thousand ';
+                }
+            }
+
+            // Handle hundreds, tens, and units
+            if (num > 0) {
+                if (num < 20) {
+                    words += first[num];
+                } else {
+                    const hundreds = Math.floor(num / 100);
+                    const tensValue = Math.floor((num % 100) / 10);
+                    const onesValue = num % 10;
+                    if (hundreds > 0) {
+                        words += first[hundreds] + 'Hundred ';
+                    }
+                    if (tensValue > 0) {
+                        words += tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '');
+                    } else if (onesValue > 0) {
+                        words += first[onesValue];
+                    }
+                }
+            }
+
+            return words.trim();
+        }
+
+        let result = convertWholeNumber(wholePart);
+
+        if (decimalPart > 0) {
+            result = result + ' and ';
+            if (decimalPart < 20) {
+                result = result + first[decimalPart];
+            } else {
+                const tensValue = Math.floor(decimalPart / 10);
+                const onesValue = decimalPart % 10;
+                result = result + tens[tensValue] + (onesValue > 0 ? ' ' + first[onesValue] : '');
+            }
+            result = result + ' Paise';
+        }
+
+        return result.trim() || 'Zero';
+    } catch (error) {
+        console.error('Error converting number to words:', error);
+        return 'Zero';
+    }
+}
         });
     </script>
 </body>
