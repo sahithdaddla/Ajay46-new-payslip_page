@@ -355,10 +355,10 @@
 
         .company-logo {
             width: 180px;
-            height: 100px;
+            height: 60px;
             border-radius: 10px;
             object-fit: contain;
-            background-color: #f9f9f9;
+            background-color: #ffffff;
         }
 
         .company-details {
@@ -527,6 +527,15 @@
             flex-basis: 100%; /* Make error message take full width of the item */
             margin-left: 0; /* Remove any side margin */
             margin-top: 4px; /* Space between input and error message */
+        }
+
+        .preview-actions{
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+            /* display: none; */
         }
     </style>
 </head>
@@ -707,7 +716,7 @@
                     <table class="details-table">
                         <tr>
                             <td><span class="detail-label">Employee Name:</span> <span id="preview-name"></span></td>
-                            <td><span class="detail-label">Employee Type:</span> <span id="preview-type"></span><span class="detail-label" style="border-left:2px solid #9e9e9e;padding-left: 5px; margin-left: 5px;">Employee Code:</span> <span id="preview-id"></span></td>
+                            <td><span class="detail-label">Employee Type:</span> <span id="preview-type"></span><span class="detail-label" style="border-left:2px solid #9e9e9e;padding-left: 5px; margin-left: 5px;">Employee ID:</span> <span id="preview-id"></span></td>
                         </tr>
                         <tr>
                             <td><span class="detail-label">Designation:</span> <span id="preview-designation"></span></td>
@@ -786,12 +795,11 @@
                 <div class="payslip-footer">
                     <p>Note: This is a Computer-Generated Slip and does not require signature</p>
                 </div>
-
-                <div class="preview-actions">
+            </div>
+                            <div class="preview-actions">
                     <button type="button" class="btn btn-clear" id="close-preview">Back to Form</button>
                     <button type="button" class="btn btn-save" id="download-payslip">Download PDF</button>
                 </div>
-            </div>
         </div>
     </div>
 
