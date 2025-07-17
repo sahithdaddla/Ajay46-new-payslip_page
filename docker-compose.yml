@@ -13,17 +13,17 @@ services:
   employee_payslip:
     build: ./Employee_Payslip
     ports:
-      - "7019:80"
+      - "8888:80"
 
   hr_payslip:
     build: ./HR_Payslip
     ports:
-      - "7020:80"
+      - "8889:80"
 
   postgres:
     image: postgres:15
     ports:
-      - "5009:5432"
+      - "5888:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin123
