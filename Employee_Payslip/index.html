@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,12 +14,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f5f5f5;
-            padding: 20px;
+            background-color: #ffffff;
+       padding: 10px;
         }
 
         .container {
@@ -32,25 +33,86 @@
         }
 
         header {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: #2c53ff;
-            padding: 30px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+            height: 140px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #f8f9fa;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 20px;
         }
 
-        h1 {
-            color: #ffffff;
-            font-size: 30px;
-            text-align: center;
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header p {
+            font-weight: 300;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            max-width: 700px;
+            opacity: 0.9;
+            z-index: 2;
+        }
+
+        .banner-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: moveCircles 10s infinite linear;
+        }
+
+        @keyframes moveCircles {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-50%); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        .circle:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 8s;
+        }
+
+        .circle:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 12s;
+        }
+
+        .circle:nth-child(3) {
+            top: 80%;
+            left: 40%;
+            animation-duration: 15s;
         }
 
         .form-container {
-            background-color: #f9f9f9;
+            background-color: #e2e6ff;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -74,7 +136,7 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: #34495e;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         input, select {
@@ -87,7 +149,7 @@
         }
 
         input:focus, select:focus {
-            border-color: #3498db;
+            border-color: #2727b9;
             outline: none;
         }
 
@@ -114,7 +176,7 @@
         }
 
         .btn-view:hover {
-            background-color: #2980b9;
+            background-color: #6529b9;
             transform: translateY(-1px);
         }
 
@@ -350,8 +412,13 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>EMPLOYEE PAYSLIP VIEWER</h1>
+     <header>
+        <div class="banner-background">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <h1>Employee Payslip Tracker</h1>
     </header>
     <div class="container">
         <div class="notification success" id="success-notification"></div>
@@ -361,7 +428,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="employee-id">Employee ID:</label>
-                    <input type="text" id="employee-id" placeholder="e.g., ATS0123" maxlength="7">
+                    <input type="text" id="employee-id" placeholder="e.g., ATS0xxx" maxlength="7">
                     <span class="error-message" id="employee-id-error"></span>
                 </div>
                 <div class="form-group">
@@ -517,7 +584,7 @@
 
             // Check if page is loaded via file:// protocol
             if (window.location.protocol === 'file:') {
-                showNotification('error', 'This application must be run via the server. Please open http://3.85.61.23:3009/Employee_Payslip instead of the local file.');
+                showNotification('error', 'This application must be run via the server. Please open http://44.223.23.145:3993/Employee_Payslip instead of the local file.');
                 const logoImg = document.querySelector('.company-logo');
                 logoImg.src = 'https://placehold.co/180x100?text=Logo';
                 console.log('Forced placeholder due to file:// protocol:', logoImg.src);
@@ -545,7 +612,7 @@
             });
             logoImg.addEventListener('error', function(event) {
                 console.error('Logo failed to load:', logoImg.src, 'Error:', event);
-                showNotification('error', 'Failed to load logo. Using placeholder image. Please ensure the server is running and access via http://3.85.61.23:3009/Employee_Payslip.');
+                showNotification('error', 'Failed to load logo. Using placeholder image. Please ensure the server is running and access via http://44.223.23.145:3993/Employee_Payslip.');
                 logoImg.src = 'https://placehold.co/180x100?text=Logo';
                 console.log('Switched to placeholder:', logoImg.src);
             });
@@ -647,7 +714,7 @@
                     const year = document.getElementById('year').value;
 
                     try {
-                        const response = await fetch('http://3.85.61.23:3009/api/payslips?employeeId=' + employeeId + '&month=' + month + '&year=' + year);
+                        const response = await fetch('http://44.223.23.145:3993/api/payslips?employeeId=' + employeeId + '&month=' + month + '&year=' + year);
                         if (!response.ok) {
                             throw new Error((await response.json()).error || 'Failed to fetch payslip');
                         }

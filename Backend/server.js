@@ -1,3 +1,4 @@
+
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
@@ -8,7 +9,7 @@ const path = require('path');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3009;
+const port = process.env.PORT || 3993;
 
 // Database configuration
 const pool = new Pool({

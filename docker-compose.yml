@@ -4,7 +4,7 @@ services:
   backend:
     build: ./Backend
     ports:
-      - "3009:3009"
+      - "3993:3993"
     env_file:
       - ./Backend/server.env
     depends_on:
@@ -27,7 +27,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: Payslip_db
+      POSTGRES_DB: new_employee_db
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
